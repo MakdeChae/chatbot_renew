@@ -12,21 +12,20 @@ const SERVER_URL_OLD = "http://146.56.166.180:8000/get_kakao_response_old"; // F
  */
 function response(room, msg, sender, isGroupChat, replier, imageDB, packageName) { 
     if (msg.includes("@딥챗봇")) {
-        const requestData = {
-            room: room,
-            msg: msg,
-            sender: sender,
-            isGroupChat: isGroupChat
-        };
-
-        const json = org.jsoup.Jsoup.connect(SERVER_URL)
-            .header("Content-Type", "application/json")
-            .requestBody(JSON.stringify(requestData))
-            .ignoreContentType(true)
-            .post()
-            .text();
-
         try {
+            const requestData = {
+                room: room,
+                msg: msg,
+                sender: sender,
+                isGroupChat: isGroupChat
+            };
+
+            const json = org.jsoup.Jsoup.connect(SERVER_URL)
+                .header("Content-Type", "application/json")
+                .requestBody(JSON.stringify(requestData))
+                .ignoreContentType(true)
+                .post()
+                .text();
             const data = JSON.parse(json);
             const reply = data.response || "응답을 가져올 수 없습니다.";
             if (reply !== "응답을 가져올 수 없습니다.") {
@@ -35,7 +34,6 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
         } catch (parseError) {
             replier.reply("서버 응답을 처리하는 중 오류가 발생했습니다.");
         }
-    //replier.reply("서버 응답을 처리하는 중 오류가 발생했습니다.");
     }
     else if(sender == "장인우" || sender == "최준철" || sender == "조원준" || sender == "황인록 pippin.hobbit" ) {
         if (msg.includes("ㅎㅇ")) {
