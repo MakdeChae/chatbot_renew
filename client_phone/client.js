@@ -35,7 +35,7 @@ function response(room, msg, sender, isGroupChat, replier, imageDB, packageName)
             replier.reply("서버 응답을 처리하는 중 오류가 발생했습니다.");
         }
     }
-    else if(sender == "장인우" || sender == "최준철" || sender == "조원준" || sender == "황인록 pippin.hobbit" ) {
+    else if(sender == "채윤성" || sender == "장인우" || sender == "최준철" || sender == "조원준" || sender == "황인록 pippin.hobbit" ) {
         if (msg.includes("ㅎㅇ")) {
             let currentHour = new Date().getHours(); // 현재 시간을 가져옴
             let response;

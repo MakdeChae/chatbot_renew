@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 import os
 import google.generativeai as genai
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session
 # from openai import OpenAI
 from dotenv import load_dotenv
 
-app = Flask(__name__)
-
 load_dotenv()
+
+app = Flask(__name__)
+app.secret_key = os.getenv("SECRET_KEY")
+
+VALID_USERNAME = os.getenv("ADMIN_ID")
+VALID_PASSWORD = os.getenv("ADMIN_PW")
 
 googlekey = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=googlekey)
@@ -86,6 +90,21 @@ def get_gemini_response(user_id, filtered_msg):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if username == VALID_USERNAME and password == VALID_PASSWORD:
+        session['user'] = username
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False})
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
 
 
 @app.route('/get_kakao_response', methods=['POST'])
